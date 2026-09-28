@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; media-src *; script-src * 'unsafe-eval' 'unsafe-inline'; connect-src *; font-src *; img-src 'self' data: blob:; style-src * 'unsafe-inline'; manifest-src * 'unsafe-inline';">
+    <meta name="theme-color" content="#000000" />
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Vampire Survivors" />
+    <meta name="apple-mobile-web-app-title" content="Vampire Survivors" />
+    <meta name="msapplication-starturl" content="./" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./icons/icons-192.png" />
+    <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="./icons/icons-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="./icons/icons-512.png" />
+    <link rel="apple-touch-icon" type="image/png" sizes="512x512" href="./icons/icons-512.png" />
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <title>Vampire Survivors PhaserJS v1.5.101</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            background-color: #000000;
+        }
+    </style>
+    <style media="screen">
+        @font-face {
+            font-family: fontANY;
+            src: url('https://pub-1445e1b56ae6416c977ac57833bb2f22.r2.dev/assets/fonts/ANY.eot?v=ck9');
+            /* IE9 Compat Modes */
+            src: url('https://pub-1445e1b56ae6416c977ac57833bb2f22.r2.dev/assets/fonts/ANY.eot?v=ck9#iefix') format('embedded-opentype'),
+                /* IE6-IE8 */
+                url('https://pub-1445e1b56ae6416c977ac57833bb2f22.r2.dev/assets/fonts/ANY.woff2?v=ck9') format('woff2'),
+                /* Super Modern Browsers */
+                url('https://pub-1445e1b56ae6416c977ac57833bb2f22.r2.dev/assets/fonts/ANY.woff?v=ck9') format('woff'),
+                /* Pretty Modern Browsers */
+                url('https://pub-1445e1b56ae6416c977ac57833bb2f22.r2.dev/assets/fonts/ANY.ttf?v=ck9') format('truetype'),
+                /* Safari, Android, iOS */
+                url('https://pub-1445e1b56ae6416c977ac57833bb2f22.r2.dev/assets/fonts/ANY.svg?v=ck9#Courier') format('svg');
+            /* Legacy iOS */
+            font-weight: 400;
+            font-weight: normal;
+        }
+
+        @font-face {
+            font-family: fontKO;
+            src: url('https://pub-1445e1b56ae6416c977ac57833bb2f22.r2.dev/assets/fonts/KO.eot?v=ck9');
+            /* IE9 Compat Modes */
+            src: url('https://pub-1445e1b56ae6416c977ac57833bb2f22.r2.dev/assets/fonts/KO.eot?v=ck9#iefix') format('embedded-opentype'),
+                /* IE6-IE8 */
+                url('https://pub-1445e1b56ae6416c977ac57833bb2f22.r2.dev/assets/fonts/KO.woff2?v=ck9') format('woff2'),
+                /* Super Modern Browsers */
+                url('https://pub-1445e1b56ae6416c977ac57833bb2f22.r2.dev/assets/fonts/KO.woff?v=ck9') format('woff'),
+                /* Pretty Modern Browsers */
+                url('https://pub-1445e1b56ae6416c977ac57833bb2f22.r2.dev/assets/fonts/KO.ttf?v=ck9') format('truetype'),
+                /* Safari, Android, iOS */
+                url('https://pub-1445e1b56ae6416c977ac57833bb2f22.r2.dev/assets/fonts/KO.svg?v=ck9#MaplestoryLight') format('svg');
+            /* Legacy iOS */
+            font-weight: 400;
+            font-weight: normal;
+        }
+    </style><noscript>Please enable javascript to continue using this application.</noscript>
+    <script>
+        (function () {
+            var R2 = 'https://pub-1445e1b56ae6416c977ac57833bb2f22.r2.dev/assets/';
+            var V = 'v=ck9';
+            function bust(u) {
+                if (u == null) return u;
+                var s = String(u);
+                if (s.indexOf(R2) !== 0 || s.indexOf(V) !== -1) return u;
+                var h = '', i = s.indexOf('#');
+                if (i >= 0) { h = s.slice(i); s = s.slice(0, i); }
+                return s + (s.indexOf('?') >= 0 ? '&' : '?') + V + h;
+            }
+            if (window.fetch) {
+                var of = window.fetch;
+                window.fetch = function (input, init) {
+                    try {
+                        if (typeof input === 'string') input = bust(input);
+                        else if (input && input.url) {
+                            var b = bust(input.url);
+                            if (b !== input.url) input = new Request(b, input);
+                        }
+                    } catch (e) {}
+                    return of.call(this, input, init);
+                };
+            }
+            if (window.XMLHttpRequest) {
+                var oo = window.XMLHttpRequest.prototype.open;
+                window.XMLHttpRequest.prototype.open = function (method, url) {
+                    try { arguments[1] = bust(url); } catch (e) {}
+                    return oo.apply(this, arguments);
+                };
+            }
+            function patchSrc(proto) {
+                if (!proto) return;
+                var d = Object.getOwnPropertyDescriptor(proto, 'src');
+                if (!d || !d.set) return;
+                Object.defineProperty(proto, 'src', {
+                    configurable: true,
+                    enumerable: d.enumerable,
+                    get: d.get,
+                    set: function (v) { return d.set.call(this, bust(v)); }
+                });
+            }
+            patchSrc(window.HTMLImageElement && window.HTMLImageElement.prototype);
+            patchSrc(window.HTMLMediaElement && window.HTMLMediaElement.prototype);
+            patchSrc(window.HTMLSourceElement && window.HTMLSourceElement.prototype);
+            if (window.Element && window.Element.prototype.setAttribute) {
+                var sa = window.Element.prototype.setAttribute;
+                window.Element.prototype.setAttribute = function (name, value) {
+                    try { if (String(name).toLowerCase() === 'src') value = bust(value); } catch (e) {}
+                    return sa.call(this, name, value);
+                };
+            }
+        })();
+    </script>
+    <script defer="defer">
+		const global = {}
+		localStorage.setItem('CapacitorStorage.Language', JSON.stringify("ja"));
+	</script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            try {
+                if (localStorage.getItem('vs_p_key_notice_hide_v2') === '1') return;
+            } catch (e) {}
+            var box = document.createElement('div');
+            box.setAttribute('role', 'dialog');
+            box.setAttribute('aria-live', 'polite');
+            box.style.cssText = 'position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:99999;background:rgba(16,16,24,.94);color:#fff;border:1px solid #777;border-radius:8px;padding:12px 14px;font:14px/1.5 sans-serif;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.55);max-width:calc(100vw - 32px);pointer-events:auto;';
+            var msg = document.createElement('div');
+            msg.textContent = 'Pを押して宝箱の演出スキップ・一時停止ができます';
+            msg.style.cssText = 'margin-bottom:10px;white-space:nowrap;';
+            var hide = document.createElement('button');
+            hide.type = 'button';
+            hide.textContent = 'もう表示しない';
+            hide.style.cssText = 'margin:0 6px;padding:6px 12px;cursor:pointer;';
+            var later = document.createElement('button');
+            later.type = 'button';
+            later.textContent = 'また知らせる';
+            later.style.cssText = 'margin:0 6px;padding:6px 12px;cursor:pointer;';
+            hide.addEventListener('click', function () {
+                try { localStorage.setItem('vs_p_key_notice_hide_v2', '1'); } catch (e) {}
+                box.remove();
+            });
+            later.addEventListener('click', function () {
+                try { localStorage.removeItem('vs_p_key_notice_hide_v2'); } catch (e) {}
+                box.remove();
+            });
+            box.appendChild(msg);
+            box.appendChild(hide);
+            box.appendChild(later);
+            document.body.appendChild(box);
+        });
+    </script>
+    <script defer="defer" src="vendors.bundle.js?v=1.5.101-ck9"></script>
+    <script defer="defer" src="./main.bundle.js?v=1.5.101-ck9"></script>
+</head>
+
+<body>
+    <div style="font-family:fontANY; position:absolute; left:-1000px; visibility:hidden;">.</div>
+    <div style="font-family:fontKO; position:absolute; left:-1000px; visibility:hidden;">.</div>
+    <div id="phaser-game"></div>
+</body>
+
+</html>
